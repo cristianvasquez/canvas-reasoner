@@ -1,53 +1,51 @@
 <script setup lang='ts'>
 
-import {defineProps, onMounted, ref} from 'vue'
+import {defineProps, onMounted, ref, toRaw} from 'vue'
 import {reason} from '../reason.js'
-import {NInput} from 'naive-ui';
-
-
+import {NInput, NSwitch} from 'naive-ui';
 
 const query = `
-@prefix ex: <http://example.org/>.
-{?s a ?o} => {?s a ?o}.
-{?s ex:likes ?o} => {?s ex:likes ?o}.
+	{?s ?p ?o} => {?s ?p ?o}.
 `
 
 const props = defineProps({
-	pointer: {
+	data: {
 		required: true,
-		type: Object,
-	},
-	rules: {
-		required:true,
-		type: String
+		type: Array
 	}
 })
 
 onMounted(async () => {
-	const {dataset, terms} = props.pointer
-	result.value = await reason(dataset.toString(), props.rules, query)
+	result.value = await reason(toRaw(props.data), query)
 })
 
 const result = ref()
+const showData = ref(false)
 
 </script>
 
 <template>
+	<n-switch v-model:value="showData" />
+	<template v-if="showData">
+		<template v-for="current of data">
+			<n-input
+				v-bind:value="current"
+				type="textarea"
+				:autosize="{
+        minRows: 2,
+      }"
+			/>
+		</template>
+	</template>
 
 	<n-input
-		v-model:value="result"
+		v-bind:value="result"
 		type="textarea"
 		:autosize="{
-        minRows: 3,
+        minRows: 2,
       }"
 	/>
-	<n-input
-		v-bind:value="rules"
-		type="textarea"
-		:autosize="{
-        minRows: 3,
-      }"
-	/>
+
 </template>
 
 <style>

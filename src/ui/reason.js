@@ -1,5 +1,10 @@
-async function reason (data, rules, query) {
+async function reason (data, query) {
 
+	console.log('data',data)
+	const body = `query=${encodeURIComponent(query)}` +
+		data.map(x => `&data=${encodeURIComponent(x)}`).join('')
+
+	console.log(body)
 	const result = await fetch('https://eye.restdesc.org/', {
 		'credentials': 'omit',
 		'headers': {
@@ -12,8 +17,7 @@ async function reason (data, rules, query) {
 			'Sec-Fetch-Site': 'same-site',
 		},
 		'referrer': 'https://n3.restdesc.org/',
-		'body': `data=${encodeURIComponent(data)}&data=${encodeURIComponent(
-			rules)}&query=${encodeURIComponent(query)}`,
+		'body': body,
 		'method': 'POST',
 		'mode': 'cors',
 	})
@@ -21,4 +25,5 @@ async function reason (data, rules, query) {
 	return result.text()
 
 }
+
 export { reason }

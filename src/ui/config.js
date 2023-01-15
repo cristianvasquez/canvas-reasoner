@@ -14,8 +14,8 @@ const triplifierOptions = {
 	splitOnTag: true,
 	splitOnHeader: true,
 	splitOnId: true,
-	addLabels: true,
-	includeWikipaths: true,
+	addLabels: false,
+	includeWikipaths: false,
 }
 
 async function createVaultFromObsidian (app) {
