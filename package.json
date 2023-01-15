@@ -3,30 +3,30 @@
   "version": "0.0.1",
   "main": "main.js",
   "scripts": {
-    "dev": "node esbuild.config.mjs",
+    "dev": "node esbuild.config.mjs --bundle",
     "build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
     "version": "node version-bump.mjs && git add manifest.json versions.json"
   },
   "keywords": [],
   "author": "Cristian Vasquez",
   "license": "MIT",
-	"dependencies": {
-		"obsidian-community-lib": "^2.0.2",
-		"pinia": "^2.0.28",
-		"rdf-entity-webcomponent": "^0.6.8",
-		"vault-triplifier": "^0.2.3",
-		"vue": "^3.2.31"
-	},
-	"devDependencies": {
-		"@the_tree/esbuild-plugin-vue3": "^0.3.1",
-		"@types/node": "^16.11.6",
-		"@typescript-eslint/eslint-plugin": "^5.2.0",
-		"@typescript-eslint/parser": "^5.2.0",
-		"builtin-modules": "^3.2.0",
-		"esbuild": "^0.14.49",
-		"hash-sum": "^2.0.0",
-		"obsidian": "latest",
-		"tslib": "2.3.1",
-		"typescript": "4.4.4"
-	}
+  "dependencies": {
+    "obsidian-community-lib": "^2.0.2",
+    "pinia": "^2.0.28",
+    "vault-triplifier": "^0.2.3",
+    "vue": "^3.2.31",
+	  "naive-ui": "^2.28.1"
+  },
+  "devDependencies": {
+    "@the_tree/esbuild-plugin-vue3": "^0.3.1",
+    "@types/node": "^16.11.6",
+    "@typescript-eslint/eslint-plugin": "^5.2.0",
+    "@typescript-eslint/parser": "^5.2.0",
+    "builtin-modules": "^3.2.0",
+    "esbuild": "^0.14.49",
+    "hash-sum": "^2.0.0",
+    "obsidian": "latest",
+    "tslib": "2.3.1",
+    "typescript": "4.4.4"
+  }
 }

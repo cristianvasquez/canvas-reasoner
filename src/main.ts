@@ -3,16 +3,16 @@ import {EventEmitter} from "./lib/EventEmitter.js";
 import {MainView} from './view'
 import {PLUGIN_NAME, VIEW_NAME} from "./consts";
 
-interface TreeWalkerSettings {
+interface Settings {
 	mySetting: string;
 }
 
-const DEFAULT_SETTINGS: TreeWalkerSettings = {
+const DEFAULT_SETTINGS: Settings = {
 	mySetting: 'default'
 }
 
 export default class TreeWalker extends Plugin {
-	settings: TreeWalkerSettings;
+	settings: Settings;
 
 	async onload() {
 		await this.loadSettings();
@@ -31,6 +31,7 @@ export default class TreeWalker extends Plugin {
 		}
 		// @ts-ignore
 		let plugin = app.plugins.plugins[PLUGIN_NAME]
+
 		plugin.registerEvent(
 			this.app.metadataCache.on('changed', file => {
 				console.log('file changed')
@@ -41,7 +42,6 @@ export default class TreeWalker extends Plugin {
 			this.app.vault.on('rename', async (file, oldPath) => {
 				if (!(file instanceof TFile)) return
 				console.log('renaming')
-				// await deleteIndex(oldPath)
 				events.emit('update', file)
 			})
 		)

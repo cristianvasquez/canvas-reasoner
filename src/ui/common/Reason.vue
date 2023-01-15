@@ -1,25 +1,53 @@
 <script setup lang='ts'>
 
 import {defineProps, onMounted, ref} from 'vue'
+import {reason} from '../reason.js'
+import {NInput} from 'naive-ui';
+
+
+
+const query = `
+@prefix ex: <http://example.org/>.
+{?s a ?o} => {?s a ?o}.
+{?s ex:likes ?o} => {?s ex:likes ?o}.
+`
 
 const props = defineProps({
 	pointer: {
 		required: true,
 		type: Object,
 	},
+	rules: {
+		required:true,
+		type: String
+	}
 })
 
-onMounted(() => {
+onMounted(async () => {
 	const {dataset, terms} = props.pointer
-	model.value = dataset.toString()
+	result.value = await reason(dataset.toString(), props.rules, query)
 })
 
-const model = ref()
+const result = ref()
 
 </script>
 
 <template>
-	{{ model }}
+
+	<n-input
+		v-model:value="result"
+		type="textarea"
+		:autosize="{
+        minRows: 3,
+      }"
+	/>
+	<n-input
+		v-bind:value="rules"
+		type="textarea"
+		:autosize="{
+        minRows: 3,
+      }"
+	/>
 </template>
 
 <style>
@@ -28,46 +56,5 @@ const model = ref()
 	word-break: break-word;
 }
 
-div .bringDown {
-	color: #4f4f4f;
-}
-
-.vocab {
-	color: #4f4f4f;
-	font-size: 0.7rem;
-}
-
-.vocab::after {
-	content: ':';
-}
-
-.language {
-	color: #4f4f4f;
-	font-size: 0.7rem;
-	margin-left: 4px;
-}
-
-.datatype {
-	color: #4f4f4f;
-	font-size: 0.5rem;
-	margin-left: 4px;
-}
-
-.BlankNode a {
-	color: #4f4f4f;
-	overflow: hidden;
-	display: -webkit-box;
-	-webkit-line-clamp: 1;
-	-webkit-box-orient: vertical;
-}
-
-.img-container {
-	margin-left: auto;
-	margin-right: auto;
-}
-
-.img-container img {
-	max-width: 100%;
-}
 
 </style>

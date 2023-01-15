@@ -48,7 +48,7 @@ await esbuild.build({
 		...builtins],
 	format: 'cjs',
 	watch: !prod,
-	target: 'es2020',
+	target: 'node16',
 	logLevel: 'info',
 	sourcemap: prod ? false : 'inline',
 	minify: prod ? true : false,

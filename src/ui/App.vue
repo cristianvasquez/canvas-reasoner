@@ -1,9 +1,9 @@
 <script setup lang="tsx">
 import {computed, onMounted, ref} from "vue";
 import {inject} from '@vue/runtime-core'
-import {getActiveFileContent} from 'obsidian-community-lib'
 import Reason from "./common/Reason.vue";
 import {createTriplifier, triplifierOptions} from './config.js'
+import {ItemView} from 'obsidian';
 
 const context = inject('context')
 
@@ -35,22 +35,48 @@ onMounted(async () => {
 
 async function triplifyCurrent(toRdf, file) {
 
-	const text = await getActiveFileContent(false)
-	pointer.value = toRdf(text, {path: file.path}, triplifierOptions)
-	turtle.value = pointer.value.dataset.toString()
-	ver.value = ver.value + 1
+	const canvasView = this.app.workspace.getActiveViewOfType(ItemView);
+	if (canvasView?.getViewType() === "canvas") {
+		const canvas = canvasView.canvas;
+
+		const text = JSON.stringify(canvas.data)
+		pointer.value = toRdf(text, {path: file.path}, triplifierOptions)
+		turtle.value = pointer.value.dataset.toString()
+		ver.value = ver.value + 1
+
+	} else {
+		let text = await this.app.vault.read(file);
+		pointer.value = toRdf(text, {path: file.path}, triplifierOptions)
+		turtle.value = pointer.value.dataset.toString()
+		ver.value = ver.value + 1
+	}
 
 }
+
+const rules = ref(`
+@prefix dot: <http://dottriples.org/>.
+@prefix ex: <http://example.org/>.
+
+{ ex:eats-meat dot:contains ?somebody.}
+=> { ?somebody a ex:carnivore. }.
+
+{ ex:eats-vegetables dot:contains ?somebody. }
+=> { ?somebody a ex:herbivore. }.
+
+{ ?somebody a ex:herbivore.
+  ?somebody a ex:carnivore. }
+=> { ?somebody a ex:omnivore. }.
+`)
+
 
 </script>
 
 <template>
-	<h2><a :href="debugLink">Debug</a></h2>
+	<h2><a :href="debugLink">Triples</a></h2>
 
 	<template v-if="pointer">
-		<Reason :key="ver" :pointer="pointer"/>
+		<Reason :key="ver" :pointer="pointer" :rules="rules"/>
 	</template>
-
 </template>
 
 <style scoped>
