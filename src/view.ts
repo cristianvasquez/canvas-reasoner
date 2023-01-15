@@ -18,7 +18,7 @@ export class MainView extends ItemView {
 	}
 
 	getDisplayText(): string {
-		return "Tree walker";
+		return "Canvas Reasoner";
 	}
 
 	getIcon(): string {

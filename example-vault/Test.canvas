@@ -1,0 +1,12 @@
+{
+	"nodes":[
+		{"id":"9e47b60e394b637f","x":-1920,"y":-2594,"width":740,"height":520,"type":"text","text":"@prefix dot: <http://dottriples.org/>.\n@prefix ex: <http://example.org/>.\n\n{ \n\tex:eats-meat dot:contains ?somebody.\n} => { \n\t?somebody a ex:carnivore. \n}.\n\n{ \n\tex:eats-vegetables dot:contains ?somebody. \n} => { \n\t?somebody a ex:herbivore. \n}."},
+		{"id":"0388a7cd3aee448f","x":-1240,"y":-1160,"width":1500,"height":920,"type":"group","label":"ex:eats-meat"},
+		{"id":"254b3f7e78e0b165","x":-2200,"y":-1680,"width":1710,"height":980,"type":"group","label":"ex:eats-vegetables"},
+		{"id":"886e482ae5640140","x":-1080,"y":-2594,"width":684,"height":334,"type":"text","text":"@prefix dot: <http://dottriples.org/>.\n@prefix ex: <http://example.org/>.\n{ \n\t?somebody a ex:herbivore. \n\t?somebody a ex:carnivore. \n} => { \n\t?somebody a ex:omnivore. \n}."},
+		{"id":"456a954054aa801d","x":-1810,"y":-1280,"width":260,"height":171,"type":"file","file":"Entities/Alice.md"},
+		{"id":"b10dd3a18b6cda04","x":-858,"y":-960,"width":240,"height":215,"type":"file","file":"Entities/Bob.md"},
+		{"id":"35f24550f23ba447","x":-80,"y":-680,"width":240,"height":215,"type":"file","file":"Entities/Bob.md"}
+	],
+	"edges":[]
+}
