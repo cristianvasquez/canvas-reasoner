@@ -1,5 +1,9 @@
 # canvas-reasoner
 
+## Demo
+
+![youtube demo](https://www.youtube.com/watch?v=OuwIHlZOLmQ)
+
 ## Installation
 
 - Get this code into <vault>/.obsidian/plugins/obsidian-git
